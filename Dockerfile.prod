@@ -1,0 +1,39 @@
+
+
+#### 1st stage
+
+FROM node:24-alpine AS builder
+
+WORKDIR /app
+  
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+
+#### 2nd stage: Production stage
+
+FROM node:24-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY package*.json ./
+
+
+# install all packages except dev that we need when development
+RUN npm i --omit=dev
+
+COPY --from=builder /app/dist ./dist
+
+CMD ["node" , "dist/main.js"]
+
+
+
+
+
