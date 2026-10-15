@@ -1,0 +1,140 @@
+# name: CI
+
+# on:
+#   pullrequest:
+#     branches:
+#       -main
+
+# jobs:
+#   build:
+#     name: unit test
+#     runs-on: ubuntu-latest
+#     steps:
+#       name: Check out code
+#       uses: actions/ckeckout@v7
+#       with: node-version: '14'
+
+  
+
+
+#   name: ci
+
+
+#   on:
+#     push:
+#       branches:
+#       - main
+
+#   jobs:
+#     build:
+#     runs-on: ubuntu-latest
+#     steps:
+
+
+
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    - main
+
+jobs:
+    build:
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: checkout
+        uses:actions/checkout@v4
+
+      - name: setup nodejs
+        uses:actions/setup-up-node@v4
+
+
+
+
+
+# هتحدد ال event ثم بعد كدا بتحدد الjob اللي هتشتغل في حاله الevent دا
+# تحدد اسم ال job ثم بعد كدا تهيئه ال job  زي تحميل اوبونتو ثم بعد كدا هتكتب الخطوات اللي هتعملها ال job
+
+# name: CI
+
+# on:
+#   push:
+#     branches:
+#     - main
+
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Check out code
+#       uses: actions/checkout@v2
+
+#     - name: setup nodejs
+#       uses: actions/setup-node@v2
+
+
+
+
+name: CI
+
+on: 
+  push:
+    branches:
+    - main
+
+  pull_request:
+    branches:
+    - main  
+
+
+jobs:
+  
+  test:
+    name: unit test
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: set up
+      uses: actions/setup-node@v2
+      with: 
+        node-version: 24
+      
+    - name: install dependencies
+      run: npm i
+
+    - name: run unit test
+      run: npm run test
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: set up
+      uses: actions/setup-node@v2
+      with: 
+        node-version: 24
+      
+    - name: install dependencies
+      run: npm i
+ 
+    - name: run build
+      run: npm run build
+
+
+
+
